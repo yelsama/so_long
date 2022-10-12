@@ -6,28 +6,81 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:44:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/10 21:04:46 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/13 00:44:09 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-typedef struct s_stackmap_elmt
+static int	cells_validation(char *almp, int *cnt, int *rcnt, t_wind_dims *wind)
 {
-	char	*all_map;
-	char	*line;
-	int		fd;
-}	t_stak_map_elmnts;
+	int	ret;
 
-static int	wall_valid_elmnts(char *map_direc, t_wind_dims *wind)
+	ret = 1;
+	wind->exit_fond = 0;
+	wind->plyr_fond = 0;
+	while (almp[++(*cnt)] != '\0')
+	{
+		(*rcnt)++;
+		if (almp[*cnt] == '\n')
+		{
+			if (*rcnt != wind->main_windx +1 || almp[*cnt - 1] != '1'
+				|| almp[*cnt + 1] != '1')
+				ret = 0;
+			*rcnt = 0;
+		}
+		if (!ft_strchr(wind->valid_elmts, almp[*cnt]))
+			ret = 0;
+		if (almp[*cnt] == exit_point)
+			wind->exit_fond++;
+		if (almp[*cnt] == collectible)
+			wind->collects++;
+		if (almp[*cnt] == player)
+			wind->plyr_fond++;
+	}
+	return (ret * wind->exit_fond * wind->collects * wind->plyr_fond);
+}
+
+static int	fill_valid_map(char *almp, t_wind_dims *wind)
+{
+	int	cnt;
+	int	rcnt;
+	int	ret;
+
+	cnt = -1;
+	rcnt = 0;
+	ret = 1;
+	wind->collects = 0;
+	while (almp[++cnt] != '\n' && ++rcnt)
+		if (almp[cnt] != '1')
+			ret = 0;
+	if (rcnt != wind->main_windx || almp[cnt - 1] != '1'
+		|| almp[cnt + 1] != '1')
+		ret = 0;
+	rcnt = 0;
+	ret *= cells_validation(almp, &cnt, &rcnt, wind);
+	if (rcnt != wind->main_windx)
+		return (0);
+	while (--rcnt)
+		if (almp[--cnt] != '1')
+			ret = 0;
+	if (ret)
+		wind->two_d_map = ft_split(almp, '\n');
+	return (ret);
+}
+
+static int	valid_proccess(char *map_direc, t_wind_dims *wind)
 {
 	t_stak_map_elmnts	mymap;
 
+	mymap.ret = 0;
 	mymap.all_map = 0;
 	mymap.fd = open(map_direc, O_RDONLY);
-	if(mymap.fd == -1)
+	if (mymap.fd == -1)
 		return (0);
 	mymap.line = get_next_line(mymap.fd);
+	if (mymap.line == NULL)
+		return (0);
 	wind->main_windx = ft_strlen(mymap.line) - 1;
 	wind->main_windy = 0;
 	while (mymap.line != NULL)
@@ -37,10 +90,11 @@ static int	wall_valid_elmnts(char *map_direc, t_wind_dims *wind)
 		mymap.line = get_next_line(mymap.fd);
 		wind->main_windy++;
 	}
-	puts(mymap.all_map);   /////////
-	//if valid fill as tow D or free everything and return error
-	free(mymap.all_map);	////////
-	return (1);
+	if (wind->main_windx)
+		mymap.ret = fill_valid_map(mymap.all_map, wind);
+	free(mymap.all_map);
+	close(mymap.fd);
+	return (mymap.ret);
 }
 
 static int	valid_extension(char *name, char *vext)
@@ -58,15 +112,15 @@ int	map_is_valid(char *argv, t_wind_dims *wind, char *vext)
 {
 	if (!valid_extension(argv, vext))
 		return (0);
-	if (!wall_valid_elmnts(argv, wind))
+	if (!valid_proccess(argv, wind) || wind->exit_fond + wind->plyr_fond > 2)
 	{
-		ft_printf("Error\ncan't read map");
+		ft_printf("Error\ncan't read or invalid map");
 		return (0);
 	}
-	ft_printf("this number of rows %d\n", wind->main_windy);
-	ft_printf("this number of coloms %d\n", wind->main_windx);
-	wind->main_windx *= BLOCK_DIM;
-	wind->main_windy *= BLOCK_DIM;
+	printf("this number of rows %d\n", wind->main_windy);
+	printf("this number of coloms %d\n", wind->main_windx);
+	// wind->main_windx *= BLOCK_DIM;
+	// wind->main_windy *= BLOCK_DIM;
 	wind->block_xy = BLOCK_DIM;
 	return (1);
 }

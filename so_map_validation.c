@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:44:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/13 00:44:09 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/13 18:11:06 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,6 @@ int	map_is_valid(char *argv, t_wind_dims *wind, char *vext)
 		ft_printf("Error\ncan't read or invalid map");
 		return (0);
 	}
-	printf("this number of rows %d\n", wind->main_windy);
-	printf("this number of coloms %d\n", wind->main_windx);
-	// wind->main_windx *= BLOCK_DIM;
-	// wind->main_windy *= BLOCK_DIM;
 	wind->block_xy = BLOCK_DIM;
 	return (1);
 }

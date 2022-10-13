@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/13 00:52:15 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/13 21:31:52 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef enum e_map_elemants
 	ground = '0'
 }	t_valid_entities;
 
+//To represent player position (x,y)
+typedef struct s_player_pos
+{
+	int	px;
+	int	py;
+}	t_pp;
+
 //Initiate the game to run
 typedef struct s_game_ptr
 {
@@ -51,6 +58,7 @@ typedef struct s_g_window_sizes
 	int		plyr_fond;
 	char	*valid_elmts;
 	char	**two_d_map;
+	t_pp	player_pos;
 }	t_wind_dims;
 
 //Used in map validation to to load neede elemnts
@@ -70,15 +78,22 @@ typedef struct s_directories_for_elements
 	char	*collec_dir;
 	char	*exit_dir;
 	char	*enem_dir;
+	char	*ground_dir;
 }	t_elmt_dir;
 
 //Represents the whole image of the frame
 typedef struct s_g_entities_im
 {
 	void	*wall;
+	void	*ground;
+	void	*player;
+	void	*collec;
+	void	*exit;
+	void	*enemy;
 }	t_entities;
 
 int	map_is_valid(char *argv, t_wind_dims *wind, char *vext);
 int	initiate_g(t_game_ptr *mygame, t_wind_dims *wind, t_elmt_dir *dir);
+int	playgame(int keycode, t_wind_dims *wind);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:36:36 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/13 21:56:51 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/15 04:16:52 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	main(int argc, char *argv[])
 {
-	t_game_ptr	mygame;
-	t_wind_dims	wind;
-	t_elmt_dir	dir;
+	t_game_ptr		mygame;
+	t_wind_dims		wind;
+	t_elmt_dir		dir;
+	t_all_to_rndr	all;
 
 	mygame.g_wind_name = "so_long";
 	wind.valid_elmts = "01CEPN\n";
@@ -34,8 +35,6 @@ int	main(int argc, char *argv[])
 		return (0);
 	//check rout validity
 	//
-	if (!initiate_g(&mygame, &wind, &dir))
-		return (0);
-	mlx_loop(mygame.game_ptr);
+	initiate_g(&mygame, &wind, &dir, &all);
 	return (0);
 }

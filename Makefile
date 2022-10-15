@@ -6,14 +6,14 @@
 #    By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 13:53:10 by ymohamed          #+#    #+#              #
-#    Updated: 2022/10/13 19:22:11 by ymohamed         ###   ########.fr        #
+#    Updated: 2022/10/14 16:08:24 by ymohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
 SOURCES = \
-		so_long.c so_ginitiate.c so_map_validation.c so_gactions.c \
+		so_long.c so_ginitiate.c so_map_validation.c so_gactions.c so_gmoves.c \
 		resources/get_next_line/get_next_line.c resources/get_next_line/get_next_line_utils.c \
 		
 OBJECTS = $(SOURCES:%.c=%.o)

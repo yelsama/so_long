@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:36:36 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/15 04:16:52 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:28:54 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int argc, char *argv[])
 	dir.wall_dir = "./images/wall_2.xpm";
 	dir.ground_dir = "./images/bg_1.xpm";
 	dir.collec_dir = "./images/collectable_1.xpm";
-	dir.player_dir = "./images/player_1.xpm";
+	dir.player_dir = "./images/playera_1.xpm";
+	dir.player_dir_a = "./images/playera_2.xpm";
 	dir.exit_dir = "./images/exit_1.xpm";
 	dir.enem_dir = "./images/enemy_1.xpm";
 	if (argc < 2)
@@ -37,4 +38,16 @@ int	main(int argc, char *argv[])
 	//
 	initiate_g(&mygame, &wind, &dir, &all);
 	return (0);
+}
+
+int	sl_exit(t_all_to_rndr *all)
+{
+	int	row;
+
+	row = -1;
+	while (++row < all->wind->main_windy)
+		free(all->wind->two_d_map[row]);
+	free(all->wind->two_d_map);
+	exit(0);
+	return (1);
 }

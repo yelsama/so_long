@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/15 04:16:18 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:24:19 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_directories_for_elements
 {
 	char	*wall_dir;
 	char	*player_dir;
+	char	*player_dir_a;
 	char	*collec_dir;
 	char	*exit_dir;
 	char	*enem_dir;
@@ -89,9 +90,11 @@ typedef struct s_g_entities_im
 	void	*wall;
 	void	*ground;
 	void	*player;
+	void	*player_a;
 	void	*collec;
 	void	*exit;
 	void	*enemy;
+	void	*temp;
 }	t_entities;
 
 //All elemnts needed to render game map
@@ -108,6 +111,6 @@ int		initiate_g(t_game_ptr *mygame, t_wind_dims *wind,
 int		playgame(int keycode, t_all_to_rndr *all);
 int		load_map(t_all_to_rndr *all);
 int		go_dir(t_all_to_rndr *all, int dir, t_pp *newpp, t_pp *oldpp);
-// int		go_down(t_wind_dims	*wind);
+int		sl_exit(t_all_to_rndr *all);
 
 #endif

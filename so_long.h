@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/15 20:24:19 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/16 23:56:48 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_map_elements
 }	t_valid_entities;
 
 //To represent a map position (x,y)
-typedef struct s_player_pos
+typedef struct s_point_pos
 {
 	int	px;
 	int	py;
@@ -59,6 +59,7 @@ typedef struct s_g_window_sizes
 	int		plyr_fond;
 	char	*valid_elmts;
 	char	**two_d_map;
+	char	**temp_two_d_map;
 	t_pp	*player_pos;
 	t_pp	*exit_pos;
 }	t_wind_dims;
@@ -94,7 +95,6 @@ typedef struct s_g_entities_im
 	void	*collec;
 	void	*exit;
 	void	*enemy;
-	void	*temp;
 }	t_entities;
 
 //All elemnts needed to render game map
@@ -106,11 +106,12 @@ typedef struct s_all_to_render
 }	t_all_to_rndr;
 
 int		map_is_valid(char *argv, t_wind_dims *wind, char *vext);
+int		all_paths_valid(t_wind_dims *wind);
 int		initiate_g(t_game_ptr *mygame, t_wind_dims *wind,
 			t_elmt_dir *dir, t_all_to_rndr *all);
 int		playgame(int keycode, t_all_to_rndr *all);
-int		load_map(t_all_to_rndr *all);
-int		go_dir(t_all_to_rndr *all, int dir, t_pp *newpp, t_pp *oldpp);
+int		valid_key(int key, t_pp *newpp, t_pp *oldpp, t_all_to_rndr *all);
+int		set_move(t_pp *newpp, t_pp *oldpp, t_all_to_rndr *all);
 int		sl_exit(t_all_to_rndr *all);
 
 #endif

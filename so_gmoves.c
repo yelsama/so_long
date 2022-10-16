@@ -6,11 +6,19 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:08:32 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/15 03:57:30 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/17 02:11:23 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void you_win(t_pp	*newpp, t_pp *oldpp, t_all_to_rndr *all)
+{
+	all->wind->two_d_map[oldpp->py][oldpp->px] = ground;
+	all->wind->two_d_map[newpp->py][newpp->px] = exit_point;
+	ft_printf("You Win the Game\n");
+	all->wind->plyr_fond--;
+}
 
 static void	moveplayer(t_pp	*newpp, t_pp *oldpp, t_all_to_rndr *all)
 {
@@ -20,8 +28,9 @@ static void	moveplayer(t_pp	*newpp, t_pp *oldpp, t_all_to_rndr *all)
 	all->wind->player_pos->py = newpp->py;
 }
 
-static int	set_move(t_pp *newpp, t_pp *oldpp, t_all_to_rndr *all)
+int	set_move(t_pp *newpp, t_pp *oldpp, t_all_to_rndr *all)
 {
+	oldpp = all->wind->player_pos;
 	if (newpp->py < 1 || newpp->px < 1)
 		return (0);
 	if (all->wind->two_d_map[newpp->py][newpp->px] == wall)
@@ -41,33 +50,36 @@ static int	set_move(t_pp *newpp, t_pp *oldpp, t_all_to_rndr *all)
 	if (all->wind->two_d_map[newpp->py][newpp->px] == exit_point &&
 	all->wind->collects > 0)
 		moveplayer(newpp, oldpp, all);
+	if (all->wind->two_d_map[newpp->py][newpp->px] == exit_point &&
+	all->wind->collects < 1)
+		you_win(newpp, oldpp, all);
 	return (1);
 }
 
-int	go_dir(t_all_to_rndr *all, int dir, t_pp *newpp, t_pp *oldpp)
+int	valid_key(int key, t_pp *newpp, t_pp *oldpp, t_all_to_rndr *all)
 {
 	oldpp = all->wind->player_pos;
-	if (dir == 126 || dir == 13)
+	if (key == 126 || key == 13)
 	{
 		newpp->px = oldpp->px;
 		newpp->py = oldpp->py - 1;
 	}
-	else if (dir == 125 || dir == 1)
+	else if (key == 125 || key == 1)
 	{
 		newpp->px = oldpp->px;
 		newpp->py = oldpp->py + 1;
 	}
-	else if (dir == 124 || dir == 2)
+	else if (key == 124 || key == 2)
 	{
 		newpp->px = oldpp->px + 1;
 		newpp->py = oldpp->py;
 	}
-	else if (dir == 123 || dir == 0)
+	else if (key == 123 || key == 0)
 	{
 		newpp->px = oldpp->px - 1;
 		newpp->py = oldpp->py;
 	}
 	else
 		return (0);
-	return (set_move(newpp, oldpp, all));
+	return (1);
 }

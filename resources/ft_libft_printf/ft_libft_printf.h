@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_libft_printf.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 11:40:32 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/08/08 11:34:32 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/17 21:00:37 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_LIBFT_PRINTF_H
+# define FT_LIBFT_PRINTF_H
 
 # include "./Libft/libft.h"
 # include <stdarg.h>

@@ -6,31 +6,11 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:23:30 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/16 23:55:41 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:27:47 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	sl_exit(t_all_to_rndr *all)
-{
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->collec);
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy);
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->exit);
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->ground);
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->player);
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->player_a);
-	mlx_destroy_image(all->mygame->game_ptr, all->entity->wall);
-	mlx_destroy_window(all->mygame->game_ptr, all->mygame->window);
-	while (--all->wind->main_windy)
-		free(all->wind->two_d_map[all->wind->main_windy]);
-	free(all->wind->two_d_map[0]);
-	free(all->wind->two_d_map);
-	free(all->wind->player_pos);
-	free(all->wind->exit_pos);
-	exit(0);
-	return (1);
-}
 
 static void	img_to_wind(void *entity, t_game_ptr *mygame, int x, int y)
 {
@@ -38,32 +18,36 @@ static void	img_to_wind(void *entity, t_game_ptr *mygame, int x, int y)
 		entity, x * BLOCK_DIM, y * BLOCK_DIM);
 }
 
+void	chose_load_entity(t_all_to_rndr *all, t_pp *pnt)
+{
+	if (all->wind->two_d_map[pnt->py][pnt->px] == player)
+		img_to_wind(all->entity->player, all->mygame, pnt->px, pnt->py);
+	else if (all->wind->two_d_map[pnt->py][pnt->px] == wall)
+		img_to_wind(all->entity->wall, all->mygame, pnt->px, pnt->py);
+	else if (all->wind->two_d_map[pnt->py][pnt->px] == collectible)
+		img_to_wind(all->entity->collec, all->mygame, pnt->px, pnt->py);
+	else if (all->wind->two_d_map[pnt->py][pnt->px] == exit_point &&
+	all->wind->collects < 1)
+		img_to_wind(all->entity->exit, all->mygame, pnt->px, pnt->py);
+	else if (all->wind->two_d_map[pnt->py][pnt->px] == enemy)
+		img_to_wind(all->entity->enemy, all->mygame, pnt->px, pnt->py);
+	else
+		img_to_wind(all->entity->ground, all->mygame, pnt->px, pnt->py);
+}
+
 static int	load_map(t_all_to_rndr *all)
 {
-	int	x;
-	int	y;
+	t_pp	pnt;
 
-	y = -1;
-	while (++y < all->wind->main_windy)
+	pnt.py = -1;
+	while (++pnt.py < all->wind->main_windy)
 	{
-		x = -1;
-		while (++x < all->wind->main_windx)
-		{
-			if (all->wind->two_d_map[y][x] == player)
-				img_to_wind(all->entity->player, all->mygame, x, y);
-			else if (all->wind->two_d_map[y][x] == wall)
-				img_to_wind(all->entity->wall, all->mygame, x, y);
-			else if (all->wind->two_d_map[y][x] == collectible)
-				img_to_wind(all->entity->collec, all->mygame, x, y);
-			else if (all->wind->two_d_map[y][x] == exit_point &&
-			all->wind->collects < 1)
-				img_to_wind(all->entity->exit, all->mygame, x, y);
-			else if (all->wind->two_d_map[y][x] == enemy)
-				img_to_wind(all->entity->enemy, all->mygame, x, y);
-			else
-				img_to_wind(all->entity->ground, all->mygame, x, y);
-		}
+		pnt.px = -1;
+		while (++pnt.px < all->wind->main_windx)
+			chose_load_entity(all, &pnt);
 	}
+	mlx_string_put(all->mygame->game_ptr, all->mygame->window,
+		20, 20, 902550, ft_itoa(all->wind->pmoves));
 	return (0);
 }
 
@@ -96,6 +80,8 @@ t_all_to_rndr *all)
 	mygame->window = mlx_new_window(mygame->game_ptr,
 			wind->main_windx * BLOCK_DIM, wind->main_windy * BLOCK_DIM,
 			mygame->g_wind_name);
+	if (!mygame->game_ptr || !mygame->window)
+		return (0);
 	set_inital_frame(mygame, wind, dir, &entity);
 	all->entity = &entity;
 	all->mygame = mygame;

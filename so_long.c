@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:36:36 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/16 23:54:34 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:36:27 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,7 @@ int	main(int argc, char *argv[])
 	if (!map_is_valid(argv[1], &wind, ".ber"))
 		return (0);
 	if (!all_paths_valid(&wind))
-	{
-		while (--wind.main_windy)
-			free(wind.two_d_map[wind.main_windy]);
-		free(wind.two_d_map[0]);
-		free(wind.two_d_map);
 		return (0);
-	}
 	initiate_g(&mygame, &wind, &dir, &all);
 	return (0);
 }

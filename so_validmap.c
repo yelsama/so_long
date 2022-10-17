@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:44:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/16 22:39:54 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:58:11 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static int	cells_validation(char *almp, int *cnt, int *rcnt, t_wind_dims *wind)
 		(*rcnt)++;
 		if (almp[*cnt] == '\n')
 		{
-			if (*rcnt != wind->main_windx +1 || almp[*cnt - 1] != '1'
-				|| almp[*cnt + 1] != '1')
+			if (*rcnt != wind->main_windx +1 || almp[*cnt - 1] != wall
+				|| almp[*cnt + 1] != wall)
 				ret = 0;
 			*rcnt = 0;
 		}
@@ -52,16 +52,15 @@ static int	fill_valid_map(char *almp, t_wind_dims *wind)
 	ret = 1;
 	wind->collects = 0;
 	while (almp[++cnt] != '\n')
-		if (almp[cnt] != '1')
+		if (almp[cnt] != wall)
 			ret = 0;
-	if (cnt != wind->main_windx || almp[cnt - 1] != '1'
-		|| almp[cnt + 1] != '1')
+	if (cnt != wind->main_windx || almp[cnt + 1] != wall)
 		ret = 0;
 	ret *= cells_validation(almp, &cnt, &rcnt, wind);
 	if (rcnt != wind->main_windx)
 		return (0);
 	while (--rcnt)
-		if (almp[--cnt] != '1')
+		if (almp[--cnt] != wall)
 			ret = 0;
 	if (ret)
 		wind->two_d_map = ft_split(almp, '\n');

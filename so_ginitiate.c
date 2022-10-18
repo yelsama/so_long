@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:23:30 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/17 20:27:47 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:40:33 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	load_map(t_all_to_rndr *all)
 			chose_load_entity(all, &pnt);
 	}
 	mlx_string_put(all->mygame->game_ptr, all->mygame->window,
-		20, 20, 902550, ft_itoa(all->wind->pmoves));
+		20, 20, 00250, ft_itoa(all->wind->pmoves));
 	return (0);
 }
 

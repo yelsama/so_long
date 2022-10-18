@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:22:21 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/17 20:15:26 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:04:19 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	sl_exit(t_all_to_rndr *all)
 		free(all->wind->two_d_map[all->wind->main_windy]);
 	free(all->wind->two_d_map[0]);
 	free(all->wind->two_d_map);
-	exit(0);
-	return (1);
+	return (exit(0), 1);
 }
 
 int	playgame(int keycode, t_all_to_rndr *all)

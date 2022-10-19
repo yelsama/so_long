@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 19:38:23 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:14:25 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "./resources/get_next_line/get_next_line.h"
 # include "./resources/ft_libft_printf/ft_libft_printf.h"
 # include <fcntl.h>
-#include <stdio.h>
+// #include <stdio.h>
 
 # define BLOCK_DIM 64
 

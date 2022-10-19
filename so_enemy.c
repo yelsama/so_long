@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 02:14:59 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 19:37:13 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:14:10 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	set_inital_enemyframe(t_game_ptr *mygame, t_wind_dims *wind,
 								t_elmt_dir *dir, t_entities *entity)
 {
 	entity->enemy = malloc(sizeof(void *));
-	printf("this malloced\n");
 	entity->enemy1 = mlx_xpm_file_to_image(mygame->game_ptr, dir->enem_dir1,
 			&wind->block_xy, &wind->block_xy);
 	entity->enemy2 = mlx_xpm_file_to_image(mygame->game_ptr, dir->enem_dir2,
@@ -52,5 +51,6 @@ int	enemy_actions(t_all_to_rndr *all)
 		all->entity->enemy = all->entity->enemy3;
 		compare_mv = 0;
 	}
+	//add Enemy patrol here
 	return (0);
 }

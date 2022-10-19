@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:36:36 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/18 21:39:36 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/19 08:51:29 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ t_wind_dims *wind, t_elmt_dir *dir)
 	wind->valid_elmts = "01CEPN\n";
 	dir->wall_dir = "./images/wall_2.xpm";
 	dir->ground_dir = "./images/bg_1.xpm";
-	dir->collec_dir = "./images/collectable_2.xpm";
+	dir->collec1_dir = "./images/collectable_1.xpm";
+	dir->collec2_dir = "./images/collectable_2.xpm";
 	dir->player_dir = "./images/playera_1.xpm";
 	dir->player_dir_a = "./images/playera_2.xpm";
 	dir->exit_dir = "./images/exit_1.xpm";
-	dir->enem_dir = "./images/enemy_1.xpm";
+	dir->enem_dir1 = "./images/en1.xpm";
+	dir->enem_dir2 = "./images/en2.xpm";
+	dir->enem_dir3 = "./images/en3.xpm";
 }
 
 int	main(int argc, char *argv[])
@@ -38,6 +41,7 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\nNo map has been chosen, prog exiting");
 	if (argc < 2)
 		return (0);
+	wind.enemies = 0;
 	if (!map_is_valid(argv[1], &wind, ".ber"))
 		return (0);
 	if (!all_paths_valid(&wind))

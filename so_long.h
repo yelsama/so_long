@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/17 19:39:10 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:38:23 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_g_window_sizes
 	int		collects;
 	int		exit_fond;
 	int		plyr_fond;
+	int		enemies;
 	int		pmoves;
 	char	*valid_elmts;
 	char	**two_d_map;
@@ -80,9 +81,12 @@ typedef struct s_directories_for_elements
 	char	*wall_dir;
 	char	*player_dir;
 	char	*player_dir_a;
-	char	*collec_dir;
+	char	*collec1_dir;
+	char	*collec2_dir;
 	char	*exit_dir;
-	char	*enem_dir;
+	char	*enem_dir1;
+	char	*enem_dir2;
+	char	*enem_dir3;
 	char	*ground_dir;
 }	t_elmt_dir;
 
@@ -94,8 +98,15 @@ typedef struct s_g_entities_im
 	void	*player;
 	void	*player_a;
 	void	*collec;
+	void	*collec1;
+	void	*collec2;
 	void	*exit;
 	void	*enemy;
+	void	*enemy1;
+	void	*enemy2;
+	void	*enemy3;
+	void	*temp_enemy;
+	void	*temp_coll;
 }	t_entities;
 
 //All elemnts needed to render game map
@@ -114,6 +125,11 @@ int		initiate_g(t_game_ptr *mygame, t_wind_dims *wind,
 int		playgame(int keycode, t_all_to_rndr *all);
 int		valid_key(int key, t_pp *newpp, t_pp oldpp);
 int		set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all);
-int		sl_exit(t_all_to_rndr *all);
+int		move_coin(t_all_to_rndr *all);
+int		enemy_actions(t_all_to_rndr *all);
+int		set_inital_enemyframe(t_game_ptr *mygame, t_wind_dims *wind,
+			t_elmt_dir *dir, t_entities *entity);
+void	chose_load_entity(t_all_to_rndr *all, t_pp *pnt);
+int		sl_exit(t_all_to_rndr *all, int out);
 
 #endif

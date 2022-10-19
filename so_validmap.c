@@ -6,42 +6,43 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:44:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/17 15:58:11 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/19 02:02:34 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	cells_validation(char *almp, int *cnt, int *rcnt, t_wind_dims *wind)
+static int	cells_validation(char *allmap, int *cnt,
+								int *rcnt, t_wind_dims *wind)
 {
 	int	ret;
 
 	ret = 1;
 	wind->exit_fond = 0;
 	wind->plyr_fond = 0;
-	while (almp[++(*cnt)] != '\0')
+	while (allmap[++*cnt] != '\0')
 	{
 		(*rcnt)++;
-		if (almp[*cnt] == '\n')
-		{
-			if (*rcnt != wind->main_windx +1 || almp[*cnt - 1] != wall
-				|| almp[*cnt + 1] != wall)
+		if ((allmap[*cnt] == '\n'
+				&& (*rcnt != wind->main_windx + 1
+					|| allmap[*cnt - 1] != wall || allmap[*cnt + 1] != wall))
+			|| !ft_strchr(wind->valid_elmts, allmap[*cnt]))
 				ret = 0;
+		if (allmap[*cnt] == '\n')
 			*rcnt = 0;
-		}
-		if (!ft_strchr(wind->valid_elmts, almp[*cnt]))
-			ret = 0;
-		if (almp[*cnt] == exit_point)
+		if (allmap[*cnt] == exit_point)
 			wind->exit_fond++;
-		if (almp[*cnt] == collectible)
+		if (allmap[*cnt] == collectible)
 			wind->collects++;
-		if (almp[*cnt] == player)
+		if (allmap[*cnt] == player)
 			wind->plyr_fond++;
+		if (allmap[*cnt] == enemy)
+			wind->enemies++;
 	}
 	return (ret * wind->exit_fond * wind->collects * wind->plyr_fond);
 }
 
-static int	fill_valid_map(char *almp, t_wind_dims *wind)
+static int	fill_valid_map(char *allmap, t_wind_dims *wind)
 {
 	int	cnt;
 	int	rcnt;
@@ -51,21 +52,21 @@ static int	fill_valid_map(char *almp, t_wind_dims *wind)
 	rcnt = 0;
 	ret = 1;
 	wind->collects = 0;
-	while (almp[++cnt] != '\n')
-		if (almp[cnt] != wall)
+	while (allmap[++cnt] != '\n')
+		if (allmap[cnt] != wall)
 			ret = 0;
-	if (cnt != wind->main_windx || almp[cnt + 1] != wall)
+	if (cnt != wind->main_windx || allmap[cnt + 1] != wall)
 		ret = 0;
-	ret *= cells_validation(almp, &cnt, &rcnt, wind);
+	ret *= cells_validation(allmap, &cnt, &rcnt, wind);
 	if (rcnt != wind->main_windx)
 		return (0);
 	while (--rcnt)
-		if (almp[--cnt] != wall)
+		if (allmap[--cnt] != wall)
 			ret = 0;
 	if (ret)
-		wind->two_d_map = ft_split(almp, '\n');
+		wind->two_d_map = ft_split(allmap, '\n');
 	if (ret)
-		wind->temp_two_d_map = ft_split(almp, '\n');
+		wind->temp_two_d_map = ft_split(allmap, '\n');
 	return (ret);
 }
 

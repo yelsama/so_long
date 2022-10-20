@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 20:14:25 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/21 02:57:19 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "./resources/get_next_line/get_next_line.h"
 # include "./resources/ft_libft_printf/ft_libft_printf.h"
 # include <fcntl.h>
-// #include <stdio.h>
 
 # define BLOCK_DIM 64
 
@@ -47,23 +46,32 @@ typedef struct s_game_ptr
 	char	*g_wind_name;
 }	t_game_ptr;
 
+// creates a list of enemies
+typedef struct s_enimies
+{
+	t_pp				e_pos;
+	int					dir;
+	struct s_enimies	*next_e;
+}	t_enemies;
+
 //Define Map info like Hight and Widht of the main window and each
 //block dimentsion
 typedef struct s_g_window_sizes
 {
-	int		main_windx;
-	int		main_windy;
-	int		block_xy;
-	int		collects;
-	int		exit_fond;
-	int		plyr_fond;
-	int		enemies;
-	int		pmoves;
-	char	*valid_elmts;
-	char	**two_d_map;
-	char	**temp_two_d_map;
-	t_pp	player_pos;
-	t_pp	exit_pos;
+	int			main_windx;
+	int			main_windy;
+	int			block_xy;
+	int			collects;
+	int			exit_fond;
+	int			plyr_fond;
+	int			enemies;
+	int			pmoves;
+	char		*valid_elmts;
+	char		**two_d_map;
+	char		**temp_two_d_map;
+	t_pp		player_pos;
+	t_pp		exit_pos;
+	t_enemies	*e_list;
 }	t_wind_dims;
 
 //Used in map validation to to load neede elemnts
@@ -131,5 +139,8 @@ int		set_inital_enemyframe(t_game_ptr *mygame, t_wind_dims *wind,
 			t_elmt_dir *dir, t_entities *entity);
 void	chose_load_entity(t_all_to_rndr *all, t_pp *pnt);
 int		sl_exit(t_all_to_rndr *all, int out);
+int		set_enemieslst(t_wind_dims *wind);
+int		enmy_lst_clear(t_enemies **e_lst);
+void	game_over(t_all_to_rndr *all);
 
 #endif

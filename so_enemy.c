@@ -6,11 +6,53 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 02:14:59 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 20:14:10 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/21 00:13:46 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static int	enemy_step(t_enemies *e, t_all_to_rndr *all)
+{
+	if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == collectible)
+	{
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px] = collectible;
+		e->e_pos.px = e->e_pos.px + e->dir;
+	}
+	else if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == ground)
+	{
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px] = ground;
+		e->e_pos.px = e->e_pos.px + e->dir;
+	}
+	else if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == wall ||
+	all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == enemy ||
+	all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == exit_point)
+	{
+		e->dir *= -1;
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px] = ground;
+		e->e_pos.px = e->e_pos.px + e->dir;
+	}
+	else if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == player
+	&& !--all->wind->plyr_fond)
+		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
+	return (0);
+}
+
+static void	enemy_patrol(t_all_to_rndr *all)
+{
+	t_enemies	*tmp;
+
+	tmp = all->wind->e_list;
+	while (tmp->next_e != NULL)
+	{
+		enemy_step(tmp, all);
+		tmp = tmp->next_e;
+	}
+	enemy_step(tmp, all);
+}
 
 int	set_inital_enemyframe(t_game_ptr *mygame, t_wind_dims *wind,
 								t_elmt_dir *dir, t_entities *entity)
@@ -33,6 +75,8 @@ int	enemy_actions(t_all_to_rndr *all)
 	static int	compare_mv;
 	static int	slower;
 
+	if (slower == 0)
+		all->entity->enemy = all->entity->enemy3;
 	slower++;
 	if (slower % 15 != 0)
 		return (0);
@@ -49,8 +93,8 @@ int	enemy_actions(t_all_to_rndr *all)
 	else if (compare_mv > 1)
 	{
 		all->entity->enemy = all->entity->enemy3;
-		compare_mv = 0;
+		enemy_patrol(all);
+		compare_mv = 1;
 	}
-	//add Enemy patrol here
 	return (0);
 }

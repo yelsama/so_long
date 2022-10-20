@@ -6,11 +6,20 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:22:21 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 20:07:14 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/21 02:54:20 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void	free_enemies(t_all_to_rndr *all)
+{
+	free (all->entity->temp_enemy);
+	mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy1);
+	mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy2);
+	mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy3);
+	enmy_lst_clear(&all->wind->e_list);
+}
 
 int	sl_exit(t_all_to_rndr *all, int out)
 {
@@ -25,12 +34,7 @@ int	sl_exit(t_all_to_rndr *all, int out)
 		mlx_destroy_image(all->mygame->game_ptr, all->entity->player_a);
 		mlx_destroy_image(all->mygame->game_ptr, all->entity->wall);
 		if (all->wind->enemies)
-		{	
-			free (all->entity->temp_enemy);
-			mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy1);
-			mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy2);
-			mlx_destroy_image(all->mygame->game_ptr, all->entity->enemy3);
-		}
+			free_enemies(all);
 		mlx_clear_window(all->mygame->game_ptr, all->mygame->window);
 		mlx_destroy_window(all->mygame->game_ptr, all->mygame->window);
 	}
@@ -59,6 +63,8 @@ int	move_coin(t_all_to_rndr *all)
 		all->entity->collec = all->entity->collec2;
 		compare_mv = 0;
 	}
+	if (slower == 30000000)
+		slower = 0;
 	return (0);
 }
 

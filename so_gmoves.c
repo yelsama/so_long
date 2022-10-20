@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:08:32 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 19:30:24 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/21 01:50:39 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ static void	you_win(t_pp	newpp, t_pp oldpp, t_all_to_rndr *all)
 	all->wind->two_d_map[newpp.py][newpp.px] = exit_point;
 	ft_printf("You Win the Game\n");
 	all->wind->plyr_fond--;
+	sl_exit(all, 0);
+}
+
+void	game_over(t_all_to_rndr *all)
+{
+	ft_printf("You lost\nGame Over\n");
 	sl_exit(all, 0);
 }
 
@@ -46,8 +52,8 @@ int	set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all)
 	if (all->wind->two_d_map[newpp.py][newpp.px] == enemy)
 	{
 		all->wind->two_d_map[oldpp.py][oldpp.px] = ground;
-		ft_printf("You lost\nGame Over\n");
-		sl_exit(all, 0);
+		all->wind->two_d_map[newpp.py][newpp.px] = enemy;
+		all->wind->plyr_fond--;
 	}
 	if (all->wind->two_d_map[newpp.py][newpp.px] == exit_point &&
 	all->wind->collects > 0)

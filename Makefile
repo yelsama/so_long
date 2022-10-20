@@ -6,14 +6,15 @@
 #    By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 13:53:10 by ymohamed          #+#    #+#              #
-#    Updated: 2022/10/19 02:15:52 by ymohamed         ###   ########.fr        #
+#    Updated: 2022/10/20 19:34:11 by ymohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
 SOURCES = \
-		so_long.c so_ginitiate.c so_validmap.c so_gactions.c so_gmoves.c so_validpath.c so_enemy.c \
+		so_long.c so_ginitiate.c so_validmap.c so_gactions.c so_gmoves.c so_validpath.c \
+		so_enmylst_utls.c so_enemy.c \
 		resources/get_next_line/get_next_line.c resources/get_next_line/get_next_line_utils.c \
 		
 OBJECTS = $(SOURCES:%.c=%.o)

@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:44:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/19 02:02:34 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:27:05 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,11 @@ static int	valid_extension(char *name, char *vext)
 {
 	char	*name_ext;
 
+	if (!ft_strrchr(name, '.'))
+	{
+		ft_printf("Error\nIvalid Dirctory");
+		return (0);
+	}
 	name_ext = ft_strrchr(name, '.');
 	if (!ft_strncmp(vext, name_ext, 4))
 		return (1);

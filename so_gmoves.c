@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:08:32 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/21 01:50:39 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:23:05 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all)
 	{
 		all->wind->two_d_map[oldpp.py][oldpp.px] = ground;
 		all->wind->two_d_map[newpp.py][newpp.px] = enemy;
-		all->wind->plyr_fond--;
+		game_over(all);
 	}
 	if (all->wind->two_d_map[newpp.py][newpp.px] == exit_point &&
 	all->wind->collects > 0)

@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:23:30 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/21 02:16:55 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/22 09:05:41 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	load_map(t_all_to_rndr *all)
 
 	if (all->wind->enemies)
 		enemy_actions(all);
-	if (!all->wind->plyr_fond)
+	if (all->wind->plyr_fond < 1)
 		game_over(all);
 	move_coin(all);
 	pnt.py = -1;

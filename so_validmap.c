@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:44:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/23 15:25:02 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/26 09:13:20 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	valid_proccess(char *map_direc, t_wind_dims *wind)
 		mymap.line = get_next_line(mymap.fd);
 		wind->main_windy++;
 	}
-	if (wind->main_windx)
+	if (wind->main_windx && wind->main_windy > 2)
 		mymap.ret = fill_valid_map(mymap.all_map, wind);
 	free(mymap.all_map);
 	close(mymap.fd);
@@ -106,6 +106,11 @@ static int	valid_extension(char *name, char *vext)
 	if (!name_ext)
 	{
 		ft_printf("Error\nIvalid Dirctory");
+		return (0);
+	}
+	if (ft_strlen(name_ext) != 4 || ft_strlen(name) < 5)
+	{
+		ft_printf("Error\nIvalid extention\n");
 		return (0);
 	}
 	if (!ft_strncmp(vext, name_ext, 4))

@@ -6,16 +6,17 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:08:32 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/22 09:11:51 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:23:53 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	you_win(t_pp	newpp, t_pp oldpp, t_all_to_rndr *all)
+static void	you_win(t_pp	newpp, t_pp oldpp, t_all_to_rndr *all, int moves)
 {
 	all->wind->two_d_map[oldpp.py][oldpp.px] = ground;
 	all->wind->two_d_map[newpp.py][newpp.px] = exit_point;
+	ft_printf("number of moves %d\n", ++moves);
 	ft_printf("You Win the Game\n");
 	all->wind->plyr_fond--;
 	sl_exit(all, 0);
@@ -35,7 +36,7 @@ static void	moveplayer(t_pp	newpp, t_pp oldpp, t_all_to_rndr *all)
 	all->wind->player_pos.py = newpp.py;
 }
 
-int	set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all)
+int	set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all, int *moves)
 {
 	oldpp = all->wind->player_pos;
 	if (newpp.py < 1 || newpp.px < 1)
@@ -60,7 +61,7 @@ int	set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all)
 		moveplayer(newpp, oldpp, all);
 	if (all->wind->two_d_map[newpp.py][newpp.px] == exit_point &&
 	all->wind->collects < 1)
-		you_win(newpp, oldpp, all);
+		you_win(newpp, oldpp, all, *moves);
 	return (1);
 }
 

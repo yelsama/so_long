@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 02:14:59 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/21 00:13:46 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/26 09:02:07 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,8 @@
 
 static int	enemy_step(t_enemies *e, t_all_to_rndr *all)
 {
-	if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == collectible)
+	if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == ground)
 	{
-		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
-		all->wind->two_d_map[e->e_pos.py][e->e_pos.px] = collectible;
-		e->e_pos.px = e->e_pos.px + e->dir;
-	}
-	else if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == ground)
-	{
-		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
-		all->wind->two_d_map[e->e_pos.py][e->e_pos.px] = ground;
-		e->e_pos.px = e->e_pos.px + e->dir;
-	}
-	else if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == wall ||
-	all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == enemy ||
-	all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == exit_point)
-	{
-		e->dir *= -1;
 		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
 		all->wind->two_d_map[e->e_pos.py][e->e_pos.px] = ground;
 		e->e_pos.px = e->e_pos.px + e->dir;
@@ -38,6 +23,8 @@ static int	enemy_step(t_enemies *e, t_all_to_rndr *all)
 	else if (all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] == player
 	&& !--all->wind->plyr_fond)
 		all->wind->two_d_map[e->e_pos.py][e->e_pos.px + e->dir] = enemy;
+	else
+		e->dir *= -1;
 	return (0);
 }
 

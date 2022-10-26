@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:22:21 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/21 02:54:20 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:06:19 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	playgame(int keycode, t_all_to_rndr *all)
 	ft_bzero(&newpp, sizeof(t_pp));
 	if (valid_key(keycode, &newpp, oldpp) && all->wind->plyr_fond)
 	{
-		if (set_move(newpp, all->wind->player_pos, all) && all->wind->plyr_fond)
+		if (set_move(newpp, all->wind->player_pos, all, &moves)
+			&& all->wind->plyr_fond)
 			ft_printf("number of moves %d\n", ++moves);
 		all->entity->player = all->entity->player_a;
 		all->entity->player_a = tmp;

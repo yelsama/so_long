@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:23:30 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/22 09:05:41 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/26 08:19:39 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	set_inital_frame(t_game_ptr *mygame, t_wind_dims *wind,
 	if (!entity->wall || !entity->ground || !entity->player || !entity->player_a
 		|| !entity->collec || !entity->collec1 || !entity->collec2
 		|| !entity->exit)
-		return (0);
+		exit(0);
 	return (1);
 }
 

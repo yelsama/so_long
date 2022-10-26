@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:04 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/21 02:57:19 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:04:19 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int		initiate_g(t_game_ptr *mygame, t_wind_dims *wind,
 			t_elmt_dir *dir, t_all_to_rndr *all);
 int		playgame(int keycode, t_all_to_rndr *all);
 int		valid_key(int key, t_pp *newpp, t_pp oldpp);
-int		set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all);
+int		set_move(t_pp newpp, t_pp oldpp, t_all_to_rndr *all, int *moves);
 int		move_coin(t_all_to_rndr *all);
 int		enemy_actions(t_all_to_rndr *all);
 int		set_inital_enemyframe(t_game_ptr *mygame, t_wind_dims *wind,

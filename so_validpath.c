@@ -6,7 +6,7 @@
 /*   By: ymohamed <ymohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:21:08 by ymohamed          #+#    #+#             */
-/*   Updated: 2022/10/17 19:35:34 by ymohamed         ###   ########.fr       */
+/*   Updated: 2022/10/27 21:35:59 by ymohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static void	set_player_exit_pos(t_wind_dims *wind)
 
 static int	patrol_path(int px, int py, char **map, t_wind_dims *wind)
 {
-	if (map[py][px] == 'X' || map[py][px] == '1')
+	if (map[py][px] == 'X' || map[py][px] == wall)
 		return (0);
-	if (map[py][px] == 'C')
+	if (map[py][px] == collectible)
 		wind->collects--;
-	else if (map[py][px] == 'E')
+	else if (map[py][px] == exit_point)
 		wind->exit_fond--;
 	map[py][px] = 'X';
 	if (px + 1 < wind->main_windx)
